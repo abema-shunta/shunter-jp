@@ -1,0 +1,57 @@
+doctype 
+html
+  head
+    meta(charset='utf-8')
+    meta(content="yes", name="apple-mobile-web-app-capable")
+    meta(content="black-translucent", name="apple-mobile-web-app-status-bar-style")
+    meta(content="Cubeway", name="apple-mobile-web-app-title")
+    meta(content="telephone=no", name="format-detection")
+    meta(content="initial-scale=1,maximum-scale=1,user-scalable=0", name="viewport")
+    title Shunter.jp
+    link(href='http://fonts.googleapis.com/css?family=Dosis:700', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='css/bootstrap.min.css')
+    link(rel='stylesheet', href='css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='css/font-awesome.min.css')  
+    link(rel='stylesheet', href='css/normalize.css')
+    link(rel='stylesheet', href='css/style.css')
+    script(src='js/vendor/custom.modernizr.js')
+    style.
+      html { -webkit-text-size-adjust: 100%; }
+  body
+    #Container
+      #SelfIntroduction
+        #Icon
+          #Face.active
+            img(src="img/avatar.png")
+          #Tail
+            each social in public._data.social
+              a(href=social.url, class=social.icon)
+                i(class="fa fa-"+social.icon, id="Icon-"+social.icon)
+        #Title
+          h1 Shunter.jp
+      #ControlPanel
+      #Wall
+      #DetailModal
+        img#ScreenShot
+        #DetailBody
+          h2#ContentTitle
+          #Optionals
+            small#EditedDate
+            small#ContentType
+          h3#Description
+          p#Detail
+        #CloseButton 
+          i.fa.fa-times
+    script(src='js/vendor/d3.js')
+    script(src='js/vendor/jquery.js')
+    script(src='js/bootstrap.min.js')
+    noscript
+      iframe(src="//www.googletagmanager.com/ns.html?id=GTM-56FQ5X", height="0", width="0", style="display:none;visibility:hidden")
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-56FQ5X');
+    script(src='js/script.js')
+    //script(src='http://shunter1112.tumblr.com/js?num=1')

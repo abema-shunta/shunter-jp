@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="naturalLog">
+  <head>
+    <meta charset="utf8"  />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body ng-controller="LogCtrl">
+    
+    <div id="SubPanel">
+      <ul>
+        <form>
+          <li ng-repeat="log in logs">
+            <input type="radio" name="note_title" value="{{log.uuid}}" id="{{log.uuid}}" ng-model="$parent.noteFilter"></input>
+            <label for="{{log.uuid}}">{{log.note_title}}</label>
+            <button ng-click="deleteLog(log.uuid)" class="remove"></button>
+          </li>
+        </form>
+        <li>
+          <form ng-submit="addLog()">
+            <input type="text" ng-model="newLog" size="30" placeholder="Enter new title">
+            <intpu type="submit" value="Add new note">          
+          </form>
+        </li>
+      </ul>
+    </div>
+    
+    <div id="MainPanel" >
+      <nav id="SubPanelCaller">
+        <h1>Natural Log <!--button ng-click="resetLog();">Reset</button--><button ng-click="downloadLog();" class="download">Download Log</button></h1>
+      </nav>
+      <div class="container">
+        <div class="logbody" ng-repeat="l in logs | filter: {uuid: noteFilter}">
+          <table>
+            <tr><td colspan="2"><h2>{{l.note_title}}</h2></td></tr>
+            <tbody ng-repeat="date_note in l.date_notes">
+              <tr><td colspan="2"><h3>{{date_note.date}}</h3></td></tr>
+              <tr ng-repeat="n in date_note.notes">
+                <td class="time">{{n.time}}</td>
+                <td class="note" contenteditable="true" ng-blur="editNote(date_note,target,$index)" ng-click="target=$event.target">{{n.content}}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        <form ng-submit="addNote()">
+          <span id="currentTime" ng-model="noteTime">99:99:99</span>
+          <input type="text" ng-model="noteContent" size="30" placeholder="Memo">
+          <input class="btn-primary" type="submit" value="add">
+        </form>
+      </div>
+      <script src="js/angular.min.js"></script>
+      <script src="js/controller.js"></script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='http://fonts.googleapis.com/css?family=Keania+One' rel='stylesheet' type='text/css'>
+  <style>
+  * { font-family: 'Keania One', cursive; margin:0px; padding: 0px;  }
+  #everything{ position: absolute; width:100%; height:100%; }
+  h1{
+    text-shadow: 1px 4px 10px #000;
+    margin-top: 20%;
+    text-align:center;
+    color: #FFF;}
+  h2 { text-align: center; }
+  #footer{position: absolute;
+  background: rgba(0,0,0,.5); overflow-x: scroll; overflow-y: hidden;
+  width: 100%; height: 60px; bottom: 0px;}
+  ul { margin: 0px; list-style: none; height: 50px; white-space: nowrap}
+  li{ display: inline-block; position: relative; height: 50px; width: 50px; margin: 5px; white-space: nowrap}
+  li span{ position:absolute; font-size: 10px; bottom: 0px}
+  #caption {display: block;position:absolute; bottom:60px; background: rgba(0,0,0,.5); padding: 0px 10px; color: #FFF;}
+  </style>
+</head>
+<body ng-controller="HelloCtrl" style="height: 100%; background: {{bColor}};">
+  <div id="everything" style="" ng-mousemove="changeColor($event)" ng-click="addColor()">
+  <h1> Picklr </h1>
+  <h2> {{bColor}} </h2>
+  <span id="caption">Picked List</span>
+  <div id="footer">
+  <ul>
+    <li ng-repeat="item in items" style="background:{{item}}">
+      <span>{{item}}
+    </li>
+  </ul>
+  </div>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js"></script>
+  <script type="text/javascript">
+  function HSV2RGB(hsv){
+      var h = hsv.hue, s = hsv.sat, v = hsv.val;
+      var rgb, i, data = [];
+      if (s === 0) {
+        rgb = [v,v,v];
+      } else {
+        h = h / 60;
+        i = Math.floor(h);
+        data = [v*(1-s), v*(1-s*(h-i)), v*(1-s*(1-(h-i)))];
+        switch(i) {
+          case 0: rgb = [v, data[2], data[0]]; break;
+          case 1: rgb = [data[1], v, data[0]]; break;
+          case 2: rgb = [data[0], v, data[2]]; break;
+          case 3: rgb = [data[0], data[1], v]; break;
+          case 4: rgb = [data[2], data[0], v]; break;
+          default: rgb = [v, data[0], data[1]]; break;
+        }
+      }
+      return '#' + rgb.map(function(x){ 
+        return ("0" + Math.round(x*255).toString(16)).slice(-2);
+      }).join('');      
+  }
+
+  function ConvertPointerToColor(w, h, val){
+    var Value = val;
+    var Satulation = parseInt(h*100/window.innerHeight);
+    var Hue = parseInt(w*360/window.innerWidth);
+    return HSV2RGB({hue: Hue, sat: Satulation/100, val: Value/100});
+  }
+
+  function HelloCtrl($scope){
+    $scope.Value = 50;
+    $scope.bColor = "#000000";
+    $scope.items = []
+    $scope.changeColor = function($event){
+      $scope.bColor = ConvertPointerToColor($event.pageX, $event.pageY, $scope.Value);
+    };
+    $scope.addColor = function(){
+      $scope.items.push($scope.bColor);
+      console.log($scope.bColor);
+    }
+  }
+
+  </script>
+  </div>
+</body>
+</html>

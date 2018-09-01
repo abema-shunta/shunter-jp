@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" >  <!--<![endif]-->
+	<head>
+		<meta charset="utf8">
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="../css/foundation.css"></link>
+		<style>
+			body{
+				background: #EEE;
+				color: #222;
+				padding: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1><a href="index.html">English Word</a></h1>
+		<ul>
+			<li data-orbit-slide id="levy">
+				<a href="word1.html">Word1</a>
+			</li>
+			<li data-orbit-slide id="levy">
+				<a href="word2.html">Word2</a>
+			</li>
+				<li data-orbit-slide id="levy">
+				<a href="word3.html">Word3</a>
+			</li>
+				<li data-orbit-slide id="levy">
+				<a href="word4.html">Word4</a>
+			</li>			
+		</ul>
+		<script src="../js/vendor/zepto.js"></script>
+		<script src="../js/foundation.min.js"></script>
+		<script src="../js/foundation/foundation.orbit.js"></script>
+		<script src="../js/foundation/foundation.reveal.js"></script>
+		<script>
+	    
+			var datastr = window.localStorage.getItem("data");
+			var data = {};
+			if(datastr){
+				try{
+					data = JSON.parse(datastr);
+				}catch(e){
+					data = {};
+				}
+				for(var key in data){
+					$("#"+key).find("input").attr("checked", data[key]);
+				}
+			} else {
+				data = {};
+			}
+			// $(document).foundation('orbit', {
+	    // 			  animation: 'fade',
+	    // 			  timer_speed: 10000,
+	    // 			  pause_on_hover: true,
+	    // 			  resume_on_mouseout: false,
+	    // 			  animation_speed: 500,
+	    // 			  stack_on_small: true,
+	    // 			  navigation_arrows: false,
+	    // 			  slide_number: false,
+	    // 			  bullets: false,
+	    // 			  timer: false,
+	    // 			  variable_height: false,
+	    // 			});
+			$(".btn").click(function(){
+			 	$(this).parent().find("audio").get(0).play();
+			});
+			$("input.check").change(function(){
+				data[String($(this).parent().attr("id"))] = $(this).attr("checked");
+				window.localStorage.setItem("data", JSON.stringify(data));
+			});
+			$(".ja").hide()
+			$(".en span").click(function(){
+				$(this).parent().parent().find(".ja").toggle();
+			});
+			
+			
+			
+	  </script>
+	</body>
+</html>

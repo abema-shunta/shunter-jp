@@ -1,0 +1,94 @@
+{
+	"social":[
+		{
+			"url": "http://twitter.com/shunter1112",
+			"icon": "twitter",
+			"body": "Shunter1112"
+		},
+		{
+			"url": "http://facebook.com/shunter1112",
+			"icon": "facebook-square",
+			"body": "Shunta Furukawa"
+		},
+		{
+			"url": "http://shunter1112.tumblr.com/",
+			"icon": "tumblr-square",
+			"body": "Shunter.jp Tumblr"
+		},
+		{
+			"url": "skype://shunter1112?chat&topic=call_from_shunter_jp",
+			"icon": "skype",
+			"body": "Shunter1112"
+		},
+		{
+			"url": "https://www.linkedin.com/in/shunter1112",
+			"icon": "linkedin",
+			"body": "Shunta Furukawa"
+		},
+		{
+			"url": "mailto:shunter1112@gmail.com",
+			"icon": "envelope",
+			"body": "shunter1112@gmail.com"
+		}
+	],
+
+	"logo":[
+		{
+			"name": "0701"
+		},
+		{
+			"name": "0702"
+		},
+		{
+			"name": "0703"
+		},
+		{
+			"name": "0705"
+		},
+		{
+			"name": "0706"
+		},
+		{
+			"name": "0708"
+		},
+		{
+			"name": "0709"
+		},
+		{
+			"name": "0710"
+		},
+		{
+			"name": "0712"
+		}
+	],
+
+	"infographics":[
+		{
+			"name": "shrinking_japan",
+			"caption": "Shrinking Japan"
+		},
+		{
+			"name": "uhe",
+			"caption": "2013 Upper House Election"
+		}		
+	],
+
+	"web":[
+		{
+			"thumb": "atnd_search",
+			"url": "/angular/atnd/"
+		},
+		{
+			"thumb": "picklr",
+			"url": "/angular/picklr/"
+		},
+		{
+			"thumb": "naturallog",
+			"url": "/naturallog/"
+		},
+		{
+			"thumb": "knigh_tour",
+			"url": "/kt/"
+		}
+	]
+}

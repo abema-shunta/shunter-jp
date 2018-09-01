@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='http://fonts.googleapis.com/css?family=Contrail+One' rel='stylesheet' type='text/css'>
+  <style>
+  * { font-family: 'Contrail One', cursive; margin:0px; padding: 0px; text-decoration: none; }
+  #everything{ position: absolute; width:100%; height:100%; }
+  body{ background: #EEE }
+  h1{
+    box-shadow: 0px 1px 0px #FFF;
+    border-top: 1px solid #EEE; border-bottom: 1px solid #666;
+    height: 24px; line-height: 26px; text-align: center; font-size: 18px;
+    color: #000; text-shadow: 0px 1px 1px #FFF ; background: #CCC;
+  }
+  h1 b{color: #F00}
+  #results{
+    width: 960px;
+    display: block;
+    margin: 0px auto;
+    list-style: none;
+  }
+  nav { text-align: center; }
+  nav input { 
+    box-shadow: 0px 1px 4px #999 inset;
+    height: 40px; border: none; width: 400px; margin: 10px; line-height: 45px;
+    padding: 10px; font-size: 36px; text-align: center; background: #F9F9F9; text-shadow: 0px 1px 1px rgba(0,0,0,.3); }
+  .notice {color: #999; font-color: 14px; text-align:center; display: block}
+  .notice input { box-shadow: 0px 1px 4px #999 inset; font-size: 14px;  background: #F9F9F9; text-shadow: 0px 1px 1px rgba(0,0,0,.3); width: 20px}
+  #results li{
+    	background: #FEFEFE;
+    	border: 2px solid #FAFAFA;
+    	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+      width: 290px; height: 300px;
+      margin: 10px;
+      float: left;
+      position: relative;
+    }
+    li h2, li h3{ text-shadow: 0px 1px 1px #FFF; text-overflow: ellipsis; overflow: auto; white-space: nowrap;}
+    li h2{ text-shadow: 0px 1px 1px #FFF; color: #333; font-size: 14px; margin: 5px;}
+    li h3{ text-shadow: 0px 1px 1px #FFF; color: #999; font-size: 11px; margin: 5px; border-bottom: 1px #AAA solid; box-shadow: 0px 1px 0px #FFF; }
+    li h4{ text-shadow: 0px 1px 1px #FFF; color: #666; font-size: 11px; margin: 5px;}
+    span b{color: #F00; font-style: normal;}
+    span i{color: #999; font-style: normal;}
+    img {display: block; margin: 0 auto;}
+    #results li span {position: absolute; bottom: 0px; right: 0px; font-size: 12px}
+    #results li time {position: absolute; bottom: 0px; left: 0px; font-size: 12px}
+  </style>
+</head>
+
+<body ng-controller="AtndCtrl" style="height: 100%;">
+  <div id="everything" style="">
+    <h1><b>Atnd</b> Search</h1>
+    <nav>
+      <input type="text" placeholder="Keyword" ng-change="search_event(true)" ng-model="query.keyword" id="keyword" />
+    </nav>
+    <span class="notice">{{notice}}</span>
+    <div class="notice" ng-show="nvisible">
+      "{{result_keyword}}": {{total}} results found. ____
+      <input type="text" placeholder="1" ng-change="search_event(false)" ng-model="query.start" />
+      - {{ -1 + query.start + query.count }} ____ 
+      <input type="text" placeholder="10" ng-change="search_event(false)" ng-model="query.count" /> displaying.      
+    </div>
+    <ul id="results">
+      <li ng-repeat="event in events">
+        <div class ="event">
+          <h2><a href="{{event.event_url}}">{{event.title}}</a></h2>
+          <h3>{{event.catch}}</h3>
+          <h4>{{event.address}}</h4>
+          <img src="http://maps.googleapis.com/maps/api/staticmap?center={{event.lat}},{{event.lon}}&zoom=13&size=240x140&maptype=roadmap
+          &markers=color:blue%7C{{event.lat}},{{event.lon}}&sensor=false" />
+          <time>{{event.started_at | date:'yyyy / MM / dd  hh:mm'}} ~ {{event.ended_at | date:'hh:mm'}}</time>
+          <span><b>{{event.accepted}}</b>/<i>{{event.limit}}</i></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.1/angular.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
+  <script type="text/javascript">
+  var Timer;
+  $(function(){
+    $('#results').masonry({
+      // options
+      itemSelector : 'li',
+      columnWidth : 240
+    });
+  });
+  function AtndCtrl($scope, $http){
+    $scope.nvisible = false;
+    $scope.events = [];
+    $scope.search_event = function(keyword_changed){
+      $scope.notice = "";
+      if(keyword_changed){$scope.nvisible = false;}
+      $scope.events = [];
+      var url = "http://api.atnd.org/events/?"+(_.map($scope.query,function(val,key){return key+"="+val})).join("&").toString();
+      clearTimeout($scope.timer);
+      $scope.timer = setTimeout(function(){
+        $scope.nvisible = false;
+        if(keyword_changed){
+          $scope.query.start = 1;
+          $scope.query.count = 10;
+        } 
+        console.log(url);
+        $http.jsonp(url).
+          success(function(response) {
+            console.log(response);
+            $scope.nvisible = true;
+            q = $scope.query; 
+            $scope.total = response.results_available;
+            $scope.query.start = response.results_start; 
+            $scope.query.count = response.results_returned;
+            $scope.result_keyword = $scope.query.keyword;
+            $scope.nvisible = true;
+            $scope.events = response.events;
+          });
+      },500);
+    };
+    $scope.query = {format: "jsonp", callback: "JSON_CALLBACK"};
+  }
+
+  </script>
+  </div>
+</body>
+</html>
