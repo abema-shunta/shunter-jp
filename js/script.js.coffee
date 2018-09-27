@@ -281,7 +281,7 @@ $(()->
       "type": "web",
       "description": "時系列で書き留められるメモアプリ",
       "color": "#A4Ab94",
-      "url": "http://shunter.jp/naturallog/",
+      "url": "http://profile.syunta-furukawa-uk.info/naturallog/",
       "detail": "
       会議やワークショップなど、起こった出来事をその起こった時系列のままに
       メモしたいときに役立つアプリケーションです。入力した文章に、
@@ -295,7 +295,7 @@ $(()->
       "type": "web",
       "description": "直感的に色を取り出せるWebアプリ",
       "color": "#328018"
-      "url": "http://shunter.jp/angular/picklr/",
+      "url": "http://profile.syunta-furukawa-uk.info/angular/picklr/",
       "detail": "
       マウスの動きから色を選んでくれ、16進数表示してくれるアプリです。
       いい色が見つかったら、クリックすると画面下にストックされていきます。
@@ -309,7 +309,7 @@ $(()->
       "type": "web",
       "description": "ナイトツアーの解答を計算できるアプリ",
       "color": "#990000"
-      "url": "http://shunter.jp/kt/",
+      "url": "http://profile.syunta-furukawa-uk.info/kt/",
       "detail": "
       任意のマス目の地形と開始位置を指定すると、ナイトツアーの
       パスを計算して表示してくれるアプリケーションです。
